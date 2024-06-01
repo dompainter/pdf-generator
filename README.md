@@ -16,6 +16,10 @@ An example desired output is similar to canva. Based on how a page looks, the fi
 - Text/Links must be intractable from the PDF (can’t just be an image of the document)
 - The user interface represents a document editor and the file that is downloaded should match what is shown to the user
 
+## Example views
+<img width="813" alt="2-column-doc" src="https://github.com/dompainter/pdf-generator/assets/17257060/ab3ab2dc-cce6-4ddd-a456-9ffbb81d4f6d">
+<img width="813" alt="1-column-doc" src="https://github.com/dompainter/pdf-generator/assets/17257060/f11d093a-8575-40c8-9319-03213ad81abd">
+
 ## Data structure
 
 An A4 Document made up of:
