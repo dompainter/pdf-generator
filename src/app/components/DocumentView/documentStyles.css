@@ -1,0 +1,118 @@
+.document-view {
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  ul,
+  ol {
+    /* margin-block-start: 1em;
+        margin-block-end: 1em; */
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    padding-inline-start: 20px;
+  }
+
+  .tiptap {
+    width: 100%;
+    outline: 0;
+  }
+
+  p {
+    width: 100%;
+    font-size: 1em;
+  }
+
+  h1,
+  h2,
+  h3,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: inherit;
+    line-height: 1.5em;
+  }
+
+  h1 {
+    font-size: 2.12em;
+  }
+  h2 {
+    font-size: 1.65em;
+  }
+  h3 {
+    font-size: 1.18em;
+  }
+  h4 {
+    font-size: 1.06em;
+  }
+  h5 {
+    font-size: 1em;
+  }
+  h6 {
+    font-size: 1em;
+  }
+}
+
+.tiptap .is-empty-field:first-child::before {
+  color: #a8b4bf;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.section-preview {
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  ul,
+  ol {
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    padding-inline-start: 10px;
+  }
+
+  p {
+    width: 100%;
+    font-size: 0.7em;
+  }
+
+  h1,
+  h2,
+  h3,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: inherit;
+    line-height: 1.3em;
+  }
+
+  h1 {
+    font-size: 1.8em;
+  }
+  h2 {
+    font-size: 1.45em;
+  }
+  h3 {
+    font-size: 1em;
+  }
+  h4 {
+    font-size: 0.9em;
+  }
+  h5 {
+    font-size: 0.8em;
+  }
+  h6 {
+    font-size: 0.8em;
+  }
+}

@@ -1,0 +1,87 @@
+[
+  {
+    "_id": "64abadf8e0be3ace8df356dd",
+    "name": "EXPERIENCE",
+    "sectionType": "EXPERIENCE",
+    "titleComp": "<h1 id='title'>${this.title}</h1>",
+    "component": "<div>\n<h3 id=\"jobTitle\">${this.jobTitle}</h3>\n<span id=\"datePeriod\">${this.datePeriod}</span>\n<div class=\"flex gap-3\">\n<h4 id=\"organisation\">${this.organisation}</h4>\n<h4 id=\"organisationDescription\">${this.organisationDescription}</h4>\n</div>\n<p id=\"description\">${this.description}</p>\n</div>",
+    "isStaticHeader": false
+  },
+  {
+    "_id": "64abae2ce0be3ace8df356f2",
+    "name": "EDUCATION",
+    "sectionType": "EDUCATION",
+    "titleComp": "<h1 id='title'>${this.title}</h1>",
+    "component": "<div>\n<h3 id=\"institution\">${this.institution}</h3>\n<div class=\"flex gap-3\">\n<h4 id=\"degreeName\">${this.degreeName}</h4>\n<h4 id=\"gpa\">${this.gpa}</h4>\n</div>\n<p id=\"description\">${this.description}</p>\n</div>",
+    "isStaticHeader": false
+  },
+  {
+    "_id": "64abae3ce0be3ace8df356f8",
+    "name": "SUMMARY",
+    "sectionType": "SUMMARY",
+    "titleComp": "<h1 class='text text-lg font-bold' id='title'>${this.title}</h1>",
+    "component": "<p id=\"description\">${this.description}</p>",
+    "isStaticHeader": false
+  },
+  {
+    "_id": "6631996027584979ba41b31e",
+    "name": "Profile",
+    "sectionType": "Profile",
+    "titleComp": "<div class=\"flex justify-between\">\n<div>\n<h1 id=\"name\">${this.name}</h1>\n<p id=\"phone\">${this.phone}</p>\n<p id=\"email\" >${this.email}</p>\n<p id=\"location\">${this.location}</p>\n</div>\n<img className=\"w-48\" id=\"image\" src=${this.image} />\n</div>",
+    "component": "<></>",
+    "isStaticHeader": true
+  },
+  {
+    "_id": "6635d5ea18f5c88301f05bca",
+    "name": "Certification",
+    "sectionType": "Certification",
+    "structure": "[header][content]",
+    "titleComp": "<h1 id=\"title\">${this.title}</h1>",
+    "component": "<div className=\"flex flex-col\">\n  <p id=\"name\">${this.name}</p>\n    <p id=\"description\">${this.description}</p>\n      <p id=\"date\">${this.date}</p>\n</div>",
+    "isStaticHeader": false
+  },
+  {
+    "_id": "6636dee318f5c88301f05bf1",
+    "name": "Languages",
+    "sectionType": "languages",
+    "structure": "[header][content]",
+    "titleComp": "<h1 id=\"title\">${this.title}</h1>",
+    "component": "<p id=\"language\">${this.language}</p>",
+    "isStaticHeader": false
+  },
+  {
+    "_id": "6636df667fb37444c211b9d6",
+    "name": "Hobbies",
+    "sectionType": "hobbies",
+    "structure": "[header][content]",
+    "titleComp": "<h1 id=\"title\">${this.title}</h1>",
+    "component": "<p id=\"hobby\">${this.hobby}</p>",
+    "isStaticHeader": false
+  },
+  {
+    "_id": "6636dfc87fb37444c211b9d7",
+    "name": "Tech Stack",
+    "sectionType": "techStack",
+    "titleComp": "<h1 id=\"title\">${this.title}</h1>",
+    "component": "<p id=\"stack\">${this.stack}</p>",
+    "isStaticHeader": false
+  },
+  {
+    "_id": "6636e06d7fb37444c211b9d8",
+    "name": "Accomplishments",
+    "sectionType": "accomplishments",
+    "structure": "[header][content]",
+    "titleComp": "<h1 id=\"title\">${this.title}</h1>",
+    "component": "<p id=\"accomplishmentTitle\">${this.accomplishmentTitle}</p>\n<p id=\"accomplishmentDescription\">${this.accomplishmentDescription}</p>",
+    "isStaticHeader": false
+  },
+  {
+    "_id": "663db879a76240464c109ba5",
+    "name": "Custom",
+    "sectionType": "custom",
+    "structure": "[header][content]",
+    "titleComp": "<h1 id=\"title\">${this.title}</h1>",
+    "component": "<p id=\"description\">${this.description}</p>",
+    "isStaticHeader": false
+  }
+]
