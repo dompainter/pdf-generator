@@ -10,7 +10,7 @@
   ul,
   ol {
     /* margin-block-start: 1em;
-        margin-block-end: 1em; */
+          margin-block-end: 1em; */
     margin-inline-start: 0;
     margin-inline-end: 0;
     padding-inline-start: 20px;
@@ -40,18 +40,23 @@
   h1 {
     font-size: 2.12em;
   }
+
   h2 {
     font-size: 1.65em;
   }
+
   h3 {
     font-size: 1.18em;
   }
+
   h4 {
     font-size: 1.06em;
   }
+
   h5 {
     font-size: 1em;
   }
+
   h6 {
     font-size: 1em;
   }
@@ -100,18 +105,23 @@
   h1 {
     font-size: 1.8em;
   }
+
   h2 {
     font-size: 1.45em;
   }
+
   h3 {
     font-size: 1em;
   }
+
   h4 {
     font-size: 0.9em;
   }
+
   h5 {
     font-size: 0.8em;
   }
+
   h6 {
     font-size: 0.8em;
   }
