@@ -80,8 +80,10 @@ export const generateHtml = async (document: MockDocumentDataType) => {
   let headerGlobalCss: string = '';
   let globalFontFamily: string = '';
   let globalFontSize: string = '';
+  let headerBackgroudColor: string = '';
 
   if (dataToConsider.styles.GLOBAL.backgroundColor) {
+    headerBackgroudColor = dataToConsider.styles.GLOBAL.backgroundColor;
     const backgroundColorJson = {
       backgroundColor: dataToConsider.styles.GLOBAL.backgroundColor,
     };
@@ -218,7 +220,7 @@ export const generateHtml = async (document: MockDocumentDataType) => {
   }
 
   const finalHtmlData = `
-    <div style="${globalFontFamily}; ${globalFontSize};">
+    <div style="${globalFontFamily}; ${globalFontSize}; border: 50px solid ${headerBackgroudColor};">
       ${htmlData}
     </div>`;
 

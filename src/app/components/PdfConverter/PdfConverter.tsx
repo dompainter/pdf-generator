@@ -51,7 +51,7 @@ const PDFConverter = ({
 
     const generatePage = (index: number) => {
       if (index >= getContent.length) {
-        doc.addImage(String(imageUri), 'JPEG', pageWidth - 480, 10, 70, 70);
+        doc.addImage(String(imageUri), 'JPEG', pageWidth - 520, 40, 70, 70);
         // const pdfDataUri = doc.output('datauristring', {
         //   filename: documentName,
         // });
