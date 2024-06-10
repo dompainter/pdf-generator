@@ -77,9 +77,9 @@ export const generateHtml = async (document: MockDocumentDataType) => {
   const documentName = dataToConsider.name;
   const sectionData: any = dataToConsider.sections;
 
-  let headerGlobalCss: any = '';
-  let globalFontFamily: any = '';
-  let globalFontSize: any = '';
+  let headerGlobalCss: string = '';
+  let globalFontFamily: string = '';
+  let globalFontSize: string = '';
 
   if (dataToConsider.styles.GLOBAL.backgroundColor) {
     const backgroundColorJson = {
@@ -155,14 +155,14 @@ export const generateHtml = async (document: MockDocumentDataType) => {
 
     if (currSectionSchema.isStaticHeader) {
       headerHtml += `
-        <div class="sec-${currSectionSchema.sectionType} sec-col-${sectionDetails.columnIndex} sec-pos-${sectionDetails.positionIndex}" style="${headerGlobalCss}; padding: 15px 30px 15px 30px;">
+        <div style="${headerGlobalCss}; padding: 15px 30px 15px 30px;">
           ${currSectionSchema.titleComp}
         </div>`;
     }
 
     if (!currSectionSchema.isStaticHeader) {
       const sectionHtml = `
-      <div class="sec-${currSectionSchema.sectionType} sec-col-${sectionDetails.columnIndex} sec-pos-${sectionDetails.positionIndex}">
+      <div>
         ${currSectionSchema.titleComp}
         ${currSectionSchema.component}
       </div>`;
