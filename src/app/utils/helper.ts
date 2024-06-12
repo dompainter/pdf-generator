@@ -1,30 +1,21 @@
 import postcss from 'postcss';
 import cssjs, { CssInJs } from 'postcss-js';
 import sectionMockJson from '../mocks/sections.json';
-import { MockDocumentDataType } from '../types/document.type';
+import { MockDocumentDataType, SectionsType } from '../types/document.type';
 
-const allKeysToReplace = [
-  '${this.title}',
-  '${this.jobTitle}',
-  '${this.datePeriod}',
-  '${this.organisation}',
-  '${this.organisationDescription}',
-  '${this.description}',
-  '${this.institution}',
-  '${this.degreeName}',
-  '${this.gpa}',
-  '${this.phone}',
-  '${this.email}',
-  '${this.location}',
-  '${this.image}',
-  '${this.name}',
-  '${this.date}',
-  '${this.language}',
-  '${this.hobby}',
-  '${this.stack}',
-  '${this.accomplishmentTitle}',
-  '${this.accomplishmentDescription}',
-];
+const innerPadding = 'padding: 15px 30px 15px 30px;';
+const sectionColumnTopBottomPadding =
+  'padding-bottom: 15px; padding-top: 15px;';
+const bodyItemTopPadding = 'padding-top: 10px;';
+
+const replaceAllKeyWithValue = (
+  html: string,
+  key: string,
+  value: string
+): string => {
+  const keyToReplace = new RegExp('\\${this.' + key + '}', 'g');
+  return html.replace(keyToReplace, value);
+};
 
 async function convertImageToDataURI(
   imageUrl: string
@@ -75,7 +66,7 @@ export const toCSS = async function (js: string): Promise<string> {
 export const generateHtml = async (document: MockDocumentDataType) => {
   const dataToConsider = document;
   const documentName = dataToConsider.name;
-  const sectionData: any = dataToConsider.sections;
+  const sectionData: SectionsType = dataToConsider.sections;
 
   let headerGlobalCss: string = '';
   let globalFontFamily: string = '';
@@ -115,6 +106,22 @@ export const generateHtml = async (document: MockDocumentDataType) => {
   const keys: string[] = Object.keys(sectionData);
   keys.forEach((key: string) => {
     const sectionDetails = sectionData[key];
+
+    const allBodyObj = sectionDetails.body.reduce((acc, curr) => {
+      return { ...acc, ...curr };
+    }, {});
+
+    const allKeysValues = {
+      ...sectionDetails.header,
+      ...allBodyObj,
+    };
+
+    const imageTagValue = allKeysValues['image'];
+
+    if (imageTagValue) {
+      imageUrl = imageTagValue;
+    }
+
     const currSectioName = sectionDetails.sectionName;
 
     const currSectionSchema = sectionMockJson.find(
@@ -128,54 +135,76 @@ export const generateHtml = async (document: MockDocumentDataType) => {
       ''
     );
 
-    // iterate over the keys to replace
-    allKeysToReplace.forEach((keyToReplace) => {
-      const keyToReplaceRegex = new RegExp('\\' + keyToReplace, 'g');
+    if (currSectionSchema.isStaticHeader) {
+      let headerStaticUpdatedComponent: string = currSectionSchema.titleComp;
 
-      const keyToReplaceValue =
-        sectionDetails.body[0][keyToReplace.split('${this.')[1].split('}')[0]];
-
-      currSectionSchema.component = currSectionSchema.component.replace(
-        keyToReplaceRegex,
-        keyToReplaceValue
-      );
-
-      const keyToReplaceTitle =
-        sectionDetails.header[keyToReplace.split('${this.')[1].split('}')[0]];
-
-      if (keyToReplace === '${this.image}' && keyToReplaceTitle) {
-        imageUrl = keyToReplaceTitle;
+      // replace all the keys with values in the header if present
+      if (Object.keys(sectionDetails.header).length) {
+        Object.keys(sectionDetails.header).forEach((headerItem) => {
+          headerStaticUpdatedComponent = replaceAllKeyWithValue(
+            headerStaticUpdatedComponent,
+            headerItem,
+            sectionDetails.header[headerItem]
+          );
+        });
+      } else {
+        headerStaticUpdatedComponent = currSectionSchema.titleComp;
       }
 
-      currSectionSchema.titleComp = currSectionSchema.titleComp.replace(
-        keyToReplaceRegex,
-        keyToReplaceTitle
-      );
-    });
-
-    if (currSectionSchema.isStaticHeader) {
+      // add updated header to the headerHtml
       headerHtml += `
-        <div style="${headerGlobalCss}; padding: 15px 30px 15px 30px;">
-          ${currSectionSchema.titleComp}
+        <div style="${headerGlobalCss}; ${innerPadding}">
+          ${headerStaticUpdatedComponent}
         </div>`;
     }
 
+    // replace all the keys with values in the non-static header if present
     if (!currSectionSchema.isStaticHeader) {
+      let headerNonStaticUpdatedComponent: string = currSectionSchema.titleComp;
+
+      if (Object.keys(sectionDetails.header).length) {
+        Object.keys(sectionDetails.header).forEach((headerItem) => {
+          headerNonStaticUpdatedComponent = replaceAllKeyWithValue(
+            headerNonStaticUpdatedComponent,
+            headerItem,
+            sectionDetails.header[headerItem]
+          );
+        });
+      } else {
+        headerNonStaticUpdatedComponent = currSectionSchema.titleComp;
+      }
+
       const sectionHtml = `
       <div>
-        ${currSectionSchema.titleComp}
-        ${currSectionSchema.component}
+        ${headerNonStaticUpdatedComponent}
+        ${
+          sectionDetails.body
+            ? sectionDetails.body
+                .map((bodyItem) => {
+                  let bodyUpdatedComponent = currSectionSchema.component;
+                  Object.keys(bodyItem).forEach((key) => {
+                    bodyUpdatedComponent = replaceAllKeyWithValue(
+                      bodyUpdatedComponent,
+                      key,
+                      bodyItem[key]
+                    );
+                  });
+                  return `<div style="${bodyItemTopPadding}">${bodyUpdatedComponent}</div>`;
+                })
+                .join('')
+            : currSectionSchema.component
+        }
       </div>`;
 
       if (sectionDetails.columnIndex === 0) {
         firstColumnHtml[sectionDetails.positionIndex] = `
-          <div style="padding-bottom: 15px; padding-top: 15px;">
+          <div style="${sectionColumnTopBottomPadding}">
           ${sectionHtml}
           </div>
         `;
       } else {
         secondColumnHtml[sectionDetails.positionIndex] = `
-          <div style="padding-bottom: 15px; padding-top: 15px;">
+          <div style="${sectionColumnTopBottomPadding}">
           ${sectionHtml}
           </div>
         `;
@@ -195,14 +224,14 @@ export const generateHtml = async (document: MockDocumentDataType) => {
 
   if (firstColumnHtml.length > 0) {
     firstColFinalHtml += `
-    <div style="padding: 15px 30px 15px 30px;">
+    <div style="${innerPadding}">
         ${firstColumnHtml.join('')}
       </div>`;
   }
 
   if (secondColumnHtml.length > 0) {
     secondColFinalHtml += `
-      <div style="padding: 15px 30px 15px 30px;">
+      <div style="${innerPadding}">
         ${secondColumnHtml.join('')}
       </div>`;
   }

@@ -1,28 +1,9 @@
 type HeaderType = {
-  name?: string;
-  phone?: string;
-  email?: string;
-  location?: string;
-  image?: string;
-  title?: string;
+  [key: string]: string;
 };
 
 type BodyItemType = {
-  jobTitle?: string;
-  organisation?: string;
-  organisationDescription?: string;
-  accomplishmentTitle?: string;
-  accomplishmentDescription?: string;
-  hobby?: string;
-  description?: string;
-  datePeriod?: string;
-  institution?: string;
-  degreeName?: string;
-  gpa?: string;
-  name?: string;
-  __id?: string;
-  date?: string;
-  language?: string;
+  [key: string]: string;
 };
 
 export type SectionType = {
@@ -35,7 +16,7 @@ export type SectionType = {
   sectionName: string;
 };
 
-type SectionsType = {
+export type SectionsType = {
   [key: string]: SectionType;
 };
 
