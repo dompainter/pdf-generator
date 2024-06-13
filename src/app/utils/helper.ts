@@ -10,6 +10,7 @@ const sectionColumnTopBottomPadding =
 const bodyItemTopPadding = 'padding-top: 10px;';
 const firstColumnWidth = 'width: 66.66%;';
 const secondColumnWidth = 'width: 33.33%;';
+const rightHalfColumnPadding = 'padding-right: 30px;';
 
 // Replaces all occurrences of a specific key within a given string with a provided value.
 const replaceAllKeyWithValue = (
@@ -112,10 +113,11 @@ export const generateHtml = async (dataToConsider: MockDocumentDataType) => {
   let singleColumnHtml: string[] = [];
   let halfLengthHtml: string[] = [];
   let imageUrl = '';
+  let imageUri: string | ArrayBuffer | null = '';
 
   // iterate over the sections keys
   const keys: string[] = Object.keys(sectionData);
-  keys.forEach((key: string) => {
+  for (const key of keys) {
     const sectionDetails = sectionData[key];
 
     const allBodyObj = sectionDetails.body.reduce((acc, curr) => {
@@ -134,6 +136,10 @@ export const generateHtml = async (dataToConsider: MockDocumentDataType) => {
     // if image key is present, then we need to update the imageUrl
     if (imageTagValue) {
       imageUrl = imageTagValue;
+      if (imageUrl) {
+        imageUri = await convertImageToDataURI(imageUrl);
+        allKeysValues['image'] = String(imageUri);
+      }
     }
 
     const currSectioName = sectionDetails.sectionName;
@@ -143,13 +149,13 @@ export const generateHtml = async (dataToConsider: MockDocumentDataType) => {
       (section) => section.name === currSectioName
     );
 
-    if (!currSectionSchema) return;
-
-    // we also need to remove the <img tag from the titleComp as we'll be adding it via jspdf
-    currSectionSchema.titleComp = currSectionSchema.titleComp.replace(
-      /<img[^>]*>/g,
-      ''
-    );
+    if (!currSectionSchema) {
+      return {
+        finalHtmlData: '',
+        imageUri: '',
+        documentName: '',
+      };
+    }
 
     // check if the header is static i.e main header
     if (currSectionSchema.isStaticHeader) {
@@ -246,15 +252,19 @@ export const generateHtml = async (dataToConsider: MockDocumentDataType) => {
             </div>
           `);
         } else if (sectionDetails.activeWidth === 'half') {
+          let halfSectionPadding = '';
+          if (halfLengthHtml.length === 0) {
+            halfSectionPadding = rightHalfColumnPadding;
+          }
           halfLengthHtml.push(`
-            <div style="width: 50%;">
+            <div style="width: 50%; ${halfSectionPadding}">
             ${sectionHtml}
             </div>
           `);
         }
       }
     }
-  });
+  }
 
   // add headerHtml to the htmlData
   if (headerHtml) {
@@ -303,12 +313,6 @@ export const generateHtml = async (dataToConsider: MockDocumentDataType) => {
     <div style="${globalFontFamily}; ${globalFontSize};">
       ${htmlData}
     </div>`;
-
-  let imageUri: string | ArrayBuffer | null = '';
-
-  if (imageUrl) {
-    imageUri = await convertImageToDataURI(imageUrl);
-  }
 
   return {
     finalHtmlData,

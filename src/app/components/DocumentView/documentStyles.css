@@ -7,6 +7,19 @@
     list-style-type: decimal;
   }
 
+  img {
+    max-width: 150px
+  }
+
+  .justify-between {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  span {
+    display: block;
+  }
+
   ul,
   ol {
     /* margin-block-start: 1em;

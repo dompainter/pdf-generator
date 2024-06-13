@@ -9,17 +9,11 @@ import './documentStyles.css';
 const DocumentView = () => {
   const [isPdfGenerated, setIsPdfGenerated] = React.useState(false);
   const [htmlData, setHtmlData] = React.useState<string>('');
-  const [imageUri, setImageUri] = React.useState<string | ArrayBuffer | null>(
-    ''
-  );
   const [documentName, setDocumentName] = React.useState<string>('');
   const onGenerate = useCallback(async (document: MockDocumentDataType) => {
-    const { finalHtmlData, imageUri, documentName } = await generateHtml(
-      document
-    );
+    const { finalHtmlData, documentName } = await generateHtml(document);
 
     setDocumentName(documentName);
-    setImageUri(imageUri);
 
     setHtmlData(finalHtmlData);
     setIsPdfGenerated(true);
@@ -55,11 +49,10 @@ const DocumentView = () => {
               className="document-view"
             />,
           ]}
-          margin={[0, 0, 0, 0]}
+          margin={[20, 0, 20, 0]}
           scale={0.6}
           increasedWidth={400}
           xMargin={0}
-          imageUri={imageUri}
           documentName={documentName}
         />
       )}

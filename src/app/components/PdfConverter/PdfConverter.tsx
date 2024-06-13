@@ -10,7 +10,6 @@ import '../../assets/Poppins-Regular-normal';
 
 interface IPDFConverter {
   getContent: ReactElement[];
-  imageUri: string | ArrayBuffer | null;
   fontName?: string;
   margin?: Array<number>;
   scale?: number;
@@ -21,7 +20,6 @@ interface IPDFConverter {
 
 const PDFConverter = ({
   getContent,
-  imageUri,
   fontName,
   margin,
   scale,
@@ -51,7 +49,6 @@ const PDFConverter = ({
 
     const generatePage = (index: number) => {
       if (index >= getContent.length) {
-        doc.addImage(String(imageUri), 'JPEG', pageWidth - 480, 10, 70, 70);
         // const pdfDataUri = doc.output('datauristring', {
         //   filename: documentName,
         // });
@@ -93,7 +90,14 @@ const PDFConverter = ({
 
   return (
     // <div id="pdf-container">
-    //   {uri && <iframe src={uri} title="PDF Viewer" name="Test" />}
+    //   {uri && (
+    //     <iframe
+    //       style={{ minHeight: '700px', minWidth: '700px' }}
+    //       src={uri}
+    //       title="PDF Viewer"
+    //       name="Test"
+    //     />
+    //   )}
     // </div>
     <></>
   );
