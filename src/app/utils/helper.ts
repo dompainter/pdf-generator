@@ -3,11 +3,15 @@ import cssjs, { CssInJs } from 'postcss-js';
 import sectionMockJson from '../mocks/sections.json';
 import { MockDocumentDataType, SectionsType } from '../types/document.type';
 
+// CSS styles
 const innerPadding = 'padding: 15px 30px 15px 30px;';
 const sectionColumnTopBottomPadding =
   'padding-bottom: 15px; padding-top: 15px;';
 const bodyItemTopPadding = 'padding-top: 10px;';
+const firstColumnWidth = 'width: 66.66%;';
+const secondColumnWidth = 'width: 33.33%;';
 
+// Replaces all occurrences of a specific key within a given string with a provided value.
 const replaceAllKeyWithValue = (
   html: string,
   key: string,
@@ -17,6 +21,7 @@ const replaceAllKeyWithValue = (
   return html.replace(keyToReplace, value);
 };
 
+// Converts an image URL to a data URI.
 async function convertImageToDataURI(
   imageUrl: string
 ): Promise<string | ArrayBuffer | null> {
@@ -46,6 +51,7 @@ async function convertImageToDataURI(
   });
 }
 
+// Converts a JavaScript object to CSS.
 export const toCSS = async function (js: string): Promise<string> {
   try {
     return new Promise((resolve, reject) => {
@@ -63,15 +69,16 @@ export const toCSS = async function (js: string): Promise<string> {
   }
 };
 
-export const generateHtml = async (document: MockDocumentDataType) => {
-  const dataToConsider = document;
-  const documentName = dataToConsider.name;
+// Generates an HTML document from a given document data object.
+export const generateHtml = async (dataToConsider: MockDocumentDataType) => {
+  const documentName: string = dataToConsider.name;
   const sectionData: SectionsType = dataToConsider.sections;
 
   let headerGlobalCss: string = '';
   let globalFontFamily: string = '';
   let globalFontSize: string = '';
 
+  // check if global styles are present for background color
   if (dataToConsider.styles.GLOBAL.backgroundColor) {
     const backgroundColorJson = {
       backgroundColor: dataToConsider.styles.GLOBAL.backgroundColor,
@@ -80,6 +87,7 @@ export const generateHtml = async (document: MockDocumentDataType) => {
     headerGlobalCss = await toCSS(JSON.stringify(backgroundColorJson));
   }
 
+  // check if global styles are present for font family
   if (dataToConsider.styles.GLOBAL.fontFamily) {
     const fontFamilyJson = {
       fontFamily: dataToConsider.styles.GLOBAL.fontFamily,
@@ -88,6 +96,7 @@ export const generateHtml = async (document: MockDocumentDataType) => {
     globalFontFamily = await toCSS(JSON.stringify(fontFamilyJson));
   }
 
+  // check if global styles are present for font size
   if (dataToConsider.styles.GLOBAL.fontSize) {
     const fontSizeJson = {
       fontSize: dataToConsider.styles.GLOBAL.fontSize,
@@ -100,6 +109,8 @@ export const generateHtml = async (document: MockDocumentDataType) => {
   let headerHtml = '';
   let firstColumnHtml: string[] = [];
   let secondColumnHtml: string[] = [];
+  let singleColumnHtml: string[] = [];
+  let halfLengthHtml: string[] = [];
   let imageUrl = '';
 
   // iterate over the sections keys
@@ -111,22 +122,27 @@ export const generateHtml = async (document: MockDocumentDataType) => {
       return { ...acc, ...curr };
     }, {});
 
-    const allKeysValues = {
+    // merge the header and body object to get all the keys and values
+    const allKeysValues: Record<string, string> = {
       ...sectionDetails.header,
       ...allBodyObj,
     };
 
-    const imageTagValue = allKeysValues['image'];
+    // check if image key is present in the keys
+    const imageTagValue: string = allKeysValues['image'];
 
+    // if image key is present, then we need to update the imageUrl
     if (imageTagValue) {
       imageUrl = imageTagValue;
     }
 
     const currSectioName = sectionDetails.sectionName;
 
+    // find the schema for the current section
     const currSectionSchema = sectionMockJson.find(
       (section) => section.name === currSectioName
     );
+
     if (!currSectionSchema) return;
 
     // we also need to remove the <img tag from the titleComp as we'll be adding it via jspdf
@@ -135,6 +151,7 @@ export const generateHtml = async (document: MockDocumentDataType) => {
       ''
     );
 
+    // check if the header is static i.e main header
     if (currSectionSchema.isStaticHeader) {
       let headerStaticUpdatedComponent: string = currSectionSchema.titleComp;
 
@@ -174,7 +191,7 @@ export const generateHtml = async (document: MockDocumentDataType) => {
         headerNonStaticUpdatedComponent = currSectionSchema.titleComp;
       }
 
-      const sectionHtml = `
+      const sectionHtml: string = `
       <div>
         ${headerNonStaticUpdatedComponent}
         ${
@@ -196,22 +213,50 @@ export const generateHtml = async (document: MockDocumentDataType) => {
         }
       </div>`;
 
-      if (sectionDetails.columnIndex === 0) {
-        firstColumnHtml[sectionDetails.positionIndex] = `
-          <div style="${sectionColumnTopBottomPadding}">
-          ${sectionHtml}
-          </div>
-        `;
+      // check if the column layout is 2
+      if (dataToConsider.columnLayout === 2) {
+        if (sectionDetails.columnIndex === 0) {
+          firstColumnHtml[sectionDetails.positionIndex] = `
+            <div style="${sectionColumnTopBottomPadding}">
+            ${sectionHtml}
+            </div>
+          `;
+        } else {
+          secondColumnHtml[sectionDetails.positionIndex] = `
+            <div style="${sectionColumnTopBottomPadding}">
+            ${sectionHtml}
+            </div>
+          `;
+        }
       } else {
-        secondColumnHtml[sectionDetails.positionIndex] = `
-          <div style="${sectionColumnTopBottomPadding}">
-          ${sectionHtml}
-          </div>
-        `;
+        if (sectionDetails.activeWidth === 'full') {
+          if (halfLengthHtml.length) {
+            singleColumnHtml.push(`
+              <div style="${sectionColumnTopBottomPadding} display:flex;">
+              ${halfLengthHtml.join('')}
+              </div>
+            `);
+            // reset the halfLengthHtml for the next iteration
+            halfLengthHtml = [];
+          }
+
+          singleColumnHtml.push(`
+            <div style="${sectionColumnTopBottomPadding} width: 100%;">
+            ${sectionHtml}
+            </div>
+          `);
+        } else if (sectionDetails.activeWidth === 'half') {
+          halfLengthHtml.push(`
+            <div style="width: 50%;">
+            ${sectionHtml}
+            </div>
+          `);
+        }
       }
     }
   });
 
+  // add headerHtml to the htmlData
   if (headerHtml) {
     htmlData = `
       <div style="display: block;">
@@ -219,39 +264,48 @@ export const generateHtml = async (document: MockDocumentDataType) => {
       </div>`;
   }
 
-  let firstColFinalHtml = '';
-  let secondColFinalHtml = '';
+  // check if the column layout is 2 and add the first and second column html to the htmlData
+  if (dataToConsider.columnLayout === 2) {
+    let firstColFinalHtml = '';
+    let secondColFinalHtml = '';
+    if (firstColumnHtml.length > 0) {
+      firstColFinalHtml += `
+      <div style="${innerPadding} ${firstColumnWidth}">
+          ${firstColumnHtml.join('')}
+        </div>`;
+    }
 
-  if (firstColumnHtml.length > 0) {
-    firstColFinalHtml += `
-    <div style="${innerPadding}">
-        ${firstColumnHtml.join('')}
-      </div>`;
-  }
+    if (secondColumnHtml.length > 0) {
+      secondColFinalHtml += `
+        <div style="${innerPadding} ${secondColumnWidth}">
+          ${secondColumnHtml.join('')}
+        </div>`;
+    }
 
-  if (secondColumnHtml.length > 0) {
-    secondColFinalHtml += `
-      <div style="${innerPadding}">
-        ${secondColumnHtml.join('')}
-      </div>`;
-  }
-
-  if (firstColFinalHtml && secondColFinalHtml) {
-    htmlData += `
-      <div class="flex gap-2">
-        ${firstColFinalHtml}
-        ${secondColFinalHtml}
-      </div>`;
+    if (firstColFinalHtml && secondColFinalHtml) {
+      htmlData += `
+        <div style="display: flex;">
+          ${firstColFinalHtml}
+          ${secondColFinalHtml}
+        </div>`;
+    } else {
+      htmlData += firstColFinalHtml || secondColFinalHtml;
+    }
   } else {
-    htmlData += firstColFinalHtml || secondColFinalHtml;
+    htmlData += `
+      <div style="${innerPadding}">
+        ${singleColumnHtml.join('')}
+      </div>`;
   }
 
+  // enclosing the htmlData in a div with global styles
   const finalHtmlData = `
     <div style="${globalFontFamily}; ${globalFontSize};">
       ${htmlData}
     </div>`;
 
   let imageUri: string | ArrayBuffer | null = '';
+
   if (imageUrl) {
     imageUri = await convertImageToDataURI(imageUrl);
   }
