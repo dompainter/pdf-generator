@@ -1,103 +1,106 @@
 {
-    "columnLayout": 2,
-    "sections": {
-        "6631996027584979ba41b31e": {
-            "header": {
-                "name": "Dominick Painter",
-                "phone": "012345678901",
-                "email": "email@email.com",
-                "location": "123 Bondi Beach, NSW",
-                "image": "https://s3.ap-southeast-2.amazonaws.com/local.1template.com/common/default_female.png"
-            },
-            "body": [
-                {}
-            ],
-            "hiddenFields": [
-                "image"
-            ],
-            "activeWidth": "full",
-            "columnIndex": 0,
-            "positionIndex": 0,
-            "sectionName": "Profile"
-        },
-        "64abadf8e0be3ace8df356dd": {
-            "header": {
-                "title": "Experience"
-            },
-            "body": [
-                {
-                    "jobTitle": "Marketing Manager",
-                    "organisation": "Google",
-                    "organisationDescription": "The worlds largest search engine",
-                    "description": "Developed and executed integrated marketing campaigns to promote Google's products and services, resulting in a 20% increase in brand awareness. Conducted market research and analyzed consumer trends to identify opportunities for product positioning and messaging optimization. Collaborated with cross-functional teams including product managers, designers, and engineers to ensure alignment of marketing strategies with product objectives. Managed social media channels and digital advertising campaigns to drive website traffic and generate leads.",
-                    "datePeriod": "Date Period"
-                }
-            ],
-            "hiddenFields": [],
-            "activeWidth": "full",
-            "columnIndex": 0,
-            "positionIndex": 0,
-            "sectionName": "EXPERIENCE"
-        },
-        "64abae2ce0be3ace8df356f2": {
-            "header": {
-                "title": "Education"
-            },
-            "body": [
-                {
-                    "institution": "University of Sydney",
-                    "degreeName": "Bachelor of Business Administation",
-                    "gpa": "GPA: 3.9/4.0",
-                    "description": "I acquired a comprehensive understanding."
-                }
-            ],
-            "hiddenFields": [],
-            "activeWidth": "full",
-            "columnIndex": 0,
-            "positionIndex": 1,
-            "sectionName": "EDUCATION"
-        },
-        "6635d5ea18f5c88301f05bca": {
-            "header": {
-                "title": "Certification"
-            },
-            "body": [
-                {
-                    "name": "Google",
-                    "__id": "0959f1e2-b1da-45d1-8d11-352fc9c50582",
-                    "description": "Google Ads Certification",
-                    "date": "2022"
-                }
-            ],
-            "hiddenFields": [],
-            "activeWidth": "full",
-            "columnIndex": 1,
-            "positionIndex": 0,
-            "sectionName": "Certification"
-        },
-        "6636dee318f5c88301f05bf1": {
-            "header": {
-                "title": "Languages"
-            },
-            "body": [
-                {
-                    "language": "English",
-                }
-            ],
-            "hiddenFields": [],
-            "activeWidth": "full",
-            "columnIndex": 1,
-            "positionIndex": 1,
-            "sectionName": "Languages"
-        }
+  "columnLayout": 2,
+  "sections": {
+    "6631996027584979ba41b31e": {
+      "header": {
+        "name": "Dominick Painter",
+        "phone": "012345678901",
+        "email": "email@email.com",
+        "location": "123 Bondi Beach, NSW",
+        "image": "https://s3.ap-southeast-2.amazonaws.com/local.1template.com/common/default_female.png"
+      },
+      "body": [{}],
+      "hiddenFields": ["image"],
+      "activeWidth": "full",
+      "columnIndex": 0,
+      "positionIndex": 0,
+      "sectionName": "Profile"
     },
-    "name": "New Resume with a really long name",
-    "styles": {
-        "GLOBAL": {
-            "fontFamily": "Poppins, sans-serif",
-            "fontSize": "15px",
-            "backgroundColor": "#DD7E7E",
-            "showIcons": true
+    "64abadf8e0be3ace8df356dd": {
+      "header": {
+        "title": "Experience"
+      },
+      "body": [
+        {
+          "jobTitle": "Marketing Manager 2",
+          "organisation": "Google",
+          "organisationDescription": "The worlds largest search engine",
+          "description": "Developed and executed integrated marketing campaigns to promote Google's products and services, resulting in a 20% increase in brand awareness. Conducted market research and analyzed consumer trends to identify opportunities for product positioning and messaging optimization. Collaborated with cross-functional teams including product managers, designers, and engineers to ensure alignment of marketing strategies with product objectives. Managed social media channels and digital advertising campaigns to drive website traffic and generate leads.",
+          "datePeriod": "Date Period"
+        },
+        {
+          "jobTitle": "Marketing Manager",
+          "organisation": "Google",
+          "organisationDescription": "The worlds largest search engine",
+          "description": "Developed and executed integrated marketing campaigns to promote Google's products and services, resulting in a 20% increase in brand awareness. Conducted market research and analyzed consumer trends to identify opportunities for product positioning and messaging optimization. Collaborated with cross-functional teams including product managers, designers, and engineers to ensure alignment of marketing strategies with product objectives. Managed social media channels and digital advertising campaigns to drive website traffic and generate leads.",
+          "datePeriod": "Date Period"
         }
+      ],
+      "hiddenFields": [],
+      "activeWidth": "full",
+      "columnIndex": 0,
+      "positionIndex": 0,
+      "sectionName": "EXPERIENCE"
     },
+    "64abae2ce0be3ace8df356f2": {
+      "header": {
+        "title": "Education"
+      },
+      "body": [
+        {
+          "institution": "University of Sydney",
+          "degreeName": "Bachelor of Business Administation",
+          "gpa": "GPA: 3.9/4.0",
+          "description": "I acquired a comprehensive understanding."
+        }
+      ],
+      "hiddenFields": [],
+      "activeWidth": "full",
+      "columnIndex": 0,
+      "positionIndex": 1,
+      "sectionName": "EDUCATION"
+    },
+    "6635d5ea18f5c88301f05bca": {
+      "header": {
+        "title": "Certification"
+      },
+      "body": [
+        {
+          "name": "Google",
+          "__id": "0959f1e2-b1da-45d1-8d11-352fc9c50582",
+          "description": "Google Ads Certification",
+          "date": "2022"
+        }
+      ],
+      "hiddenFields": [],
+      "activeWidth": "full",
+      "columnIndex": 1,
+      "positionIndex": 0,
+      "sectionName": "Certification"
+    },
+    "6636dee318f5c88301f05bf1": {
+      "header": {
+        "title": "Languages"
+      },
+      "body": [
+        {
+          "language": "English"
+        }
+      ],
+      "hiddenFields": [],
+      "activeWidth": "full",
+      "columnIndex": 1,
+      "positionIndex": 1,
+      "sectionName": "Languages"
+    }
+  },
+  "name": "2 Column New Resume with a really long name",
+  "styles": {
+    "GLOBAL": {
+      "fontFamily": "Poppins, sans-serif",
+      "fontSize": "15px",
+      "backgroundColor": "#DD7E7E",
+      "showIcons": true
+    }
+  }
 }
